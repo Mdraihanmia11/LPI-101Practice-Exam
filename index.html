@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LPI 101-400 Exam Practice – 179 Questions</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #2a3a55;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --green: #10b981;
+    --red: #ef4444;
+    --yellow: #f59e0b;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* HEADER */
+  header {
+    width: 100%;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: 2px; }
+  .logo span { color: var(--muted); }
+  .header-stats { display: flex; gap: 20px; align-items: center; }
+  .stat-box { font-family: var(--mono); font-size: 11px; text-align: center; }
+  .stat-box .val { font-size: 18px; font-weight: 600; display: block; }
+  .stat-box .lbl { color: var(--muted); }
+  .val.correct { color: var(--green); }
+  .val.wrong { color: var(--red); }
+  .val.pending { color: var(--accent); }
+
+  /* PROGRESS BAR */
+  .progress-wrap { width: 100%; height: 3px; background: var(--border); position: sticky; top: 55px; z-index: 99; }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); transition: width .4s ease; }
+
+  /* MAIN */
+  main {
+    width: 100%;
+    max-width: 820px;
+    padding: 32px 20px 80px;
+  }
+
+  /* START SCREEN */
+  .start-screen {
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .start-screen h1 {
+    font-size: 38px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .start-screen h1 span { color: var(--accent); }
+  .start-screen p { color: var(--muted); font-size: 15px; margin-bottom: 40px; }
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .topic-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: left;
+  }
+  .topic-card .tc-num { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-bottom: 4px; }
+  .topic-card .tc-name { font-size: 13px; font-weight: 500; }
+  .topic-card .tc-q { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .btn-start {
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 40px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: .5px;
+    transition: opacity .2s;
+  }
+  .btn-start:hover { opacity: .85; }
+
+  /* QUESTION CARD */
+  .q-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .q-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .q-topic-badge {
+    font-size: 11px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 10px;
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+  .sim-badge {
+    font-size: 11px;
+    background: rgba(245,158,11,.1);
+    border: 1px solid rgba(245,158,11,.3);
+    border-radius: 20px;
+    padding: 3px 10px;
+    color: var(--yellow);
+    font-family: var(--mono);
+    margin-left: 6px;
+  }
+
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .q-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.65;
+    margin-bottom: 22px;
+    color: var(--text);
+  }
+  .multi-hint {
+    font-size: 12px;
+    color: var(--yellow);
+    font-family: var(--mono);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .opt-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 18px;
+    text-align: left;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--text);
+    transition: all .15s;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .opt-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: rgba(0,212,255,.05);
+  }
+  .opt-btn.selected {
+    border-color: var(--accent2);
+    background: rgba(124,58,237,.1);
+  }
+  .opt-btn.correct {
+    border-color: var(--green) !important;
+    background: rgba(16,185,129,.1) !important;
+    color: #fff;
+  }
+  .opt-btn.wrong {
+    border-color: var(--red) !important;
+    background: rgba(239,68,68,.1) !important;
+  }
+  .opt-btn.show-correct {
+    border-color: var(--green) !important;
+    background: rgba(16,185,129,.08) !important;
+  }
+  .opt-letter {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  .opt-btn.correct .opt-letter { background: var(--green); color: #fff; }
+  .opt-btn.wrong .opt-letter { background: var(--red); color: #fff; }
+  .opt-btn.show-correct .opt-letter { background: var(--green); color: #fff; }
+  .opt-btn:disabled { cursor: default; }
+
+  /* SIMULATION INPUT */
+  .sim-wrap { margin-top: 8px; }
+  .sim-input {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    width: 100%;
+    max-width: 400px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .sim-input:focus { border-color: var(--accent); }
+  .sim-input.correct { border-color: var(--green); background: rgba(16,185,129,.05); }
+  .sim-input.wrong { border-color: var(--red); background: rgba(239,68,68,.05); }
+
+  /* FEEDBACK */
+  .feedback-box {
+    margin-top: 16px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    display: none;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-box.correct { background: rgba(16,185,129,.08); border: 1px solid rgba(16,185,129,.3); }
+  .feedback-box.wrong { background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.3); }
+  .feedback-box .fb-label {
+    font-weight: 600;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .correct .fb-label { color: var(--green); }
+  .wrong .fb-label { color: var(--red); }
+  .feedback-box .fb-ans { color: var(--text); }
+
+  /* ACTIONS */
+  .q-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+  .btn-submit, .btn-next {
+    border: none;
+    border-radius: 8px;
+    padding: 11px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: var(--sans);
+  }
+  .btn-submit {
+    background: var(--accent2);
+    color: #fff;
+  }
+  .btn-submit:hover:not(:disabled) { background: #6d28d9; }
+  .btn-submit:disabled { opacity: .4; cursor: default; }
+  .btn-next {
+    background: var(--accent);
+    color: #0a0e1a;
+  }
+  .btn-next:hover { opacity: .85; }
+  .btn-skip {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: all .2s;
+  }
+  .btn-skip:hover { border-color: var(--muted); color: var(--text); }
+
+  /* RESULT SCREEN */
+  .result-screen {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .score-ring {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 30px;
+    position: relative;
+  }
+  .score-ring svg { transform: rotate(-90deg); }
+  .score-ring .ring-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: var(--mono);
+  }
+  .ring-pct { font-size: 36px; font-weight: 600; display: block; }
+  .ring-lbl { font-size: 12px; color: var(--muted); }
+  .result-screen h2 { font-size: 28px; margin-bottom: 8px; }
+  .result-screen p { color: var(--muted); margin-bottom: 30px; }
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+  .rstat {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .rstat .rv { font-size: 32px; font-weight: 700; font-family: var(--mono); display: block; }
+  .rstat .rl { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* NAVIGATION BAR */
+  .nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    z-index: 100;
+  }
+  .btn-prev, .btn-nav-next {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: all .15s;
+  }
+  .btn-prev:hover, .btn-nav-next:hover { border-color: var(--accent); color: var(--accent); }
+  .q-indicator { font-family: var(--mono); font-size: 12px; color: var(--muted); min-width: 100px; text-align: center; }
+
+  .hidden { display: none !important; }
+
+  code {
+    font-family: var(--mono);
+    background: rgba(0,212,255,.08);
+    border: 1px solid rgba(0,212,255,.15);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 13px;
+    color: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">LPI <span>›</span> 101-400 <span>›</span> PRACTICE</div>
+  <div class="header-stats">
+    <div class="stat-box"><span class="val correct" id="h-correct">0</span><span class="lbl">CORRECT</span></div>
+    <div class="stat-box"><span class="val wrong" id="h-wrong">0</span><span class="lbl">WRONG</span></div>
+    <div class="stat-box"><span class="val pending" id="h-remain">179</span><span class="lbl">LEFT</span></div>
+  </div>
+</header>
+<div class="progress-wrap"><div class="progress-bar" id="prog-bar" style="width:0%"></div></div>
+
+<main id="main-area">
+
+<!-- START SCREEN -->
+<div class="start-screen" id="start-screen">
+  <h1>LPI <span>101-400</span> Practice Exam</h1>
+  <p>179 questions · 4 topics · Multiple choice & simulation</p>
+  <div class="topic-grid">
+    <div class="topic-card"><div class="tc-num">TOPIC 101</div><div class="tc-name">System Architecture</div><div class="tc-q">~30 questions</div></div>
+    <div class="topic-card"><div class="tc-num">TOPIC 102</div><div class="tc-name">Linux Installation & Package Mgmt</div><div class="tc-q">~40 questions</div></div>
+    <div class="topic-card"><div class="tc-num">TOPIC 103</div><div class="tc-name">GNU and Unix Commands</div><div class="tc-q">~60 questions</div></div>
+    <div class="topic-card"><div class="tc-num">TOPIC 104</div><div class="tc-name">Devices, Filesystems & FHS</div><div class="tc-q">~49 questions</div></div>
+  </div>
+  <button class="btn-start" onclick="startQuiz()">▶ Start Practice Exam</button>
+</div>
+
+<!-- QUESTION VIEW -->
+<div id="quiz-view" class="hidden">
+  <div class="q-header">
+    <div class="q-meta" id="q-meta">Question 1 of 179</div>
+    <div>
+      <span class="q-topic-badge" id="q-topic-badge">Topic 101</span>
+      <span class="sim-badge hidden" id="sim-badge">SIMULATION</span>
+    </div>
+  </div>
+  <div class="q-card">
+    <div class="q-text" id="q-text"></div>
+    <div class="multi-hint hidden" id="multi-hint">⚠ Choose <span id="multi-count"></span> correct answers</div>
+    <div class="options" id="options-wrap"></div>
+    <div class="sim-wrap hidden" id="sim-wrap">
+      <input type="text" class="sim-input" id="sim-input" placeholder="Type your answer here…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    </div>
+    <div class="feedback-box" id="feedback-box">
+      <div class="fb-label" id="fb-label"></div>
+      <div class="fb-ans" id="fb-ans"></div>
+    </div>
+  </div>
+  <div class="q-actions">
+    <button class="btn-skip" id="btn-skip" onclick="skipQ()">Skip</button>
+    <button class="btn-submit" id="btn-submit" onclick="submitAnswer()" disabled>Submit Answer</button>
+    <button class="btn-next hidden" id="btn-next" onclick="nextQ()">Next →</button>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result-screen" class="result-screen hidden">
+  <div class="score-ring">
+    <svg width="180" height="180" viewBox="0 0 180 180">
+      <circle cx="90" cy="90" r="80" fill="none" stroke="#1a2235" stroke-width="16"/>
+      <circle cx="90" cy="90" r="80" fill="none" stroke="url(#rg)" stroke-width="16" stroke-linecap="round" id="score-arc" stroke-dasharray="502" stroke-dashoffset="502"/>
+      <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient></defs>
+    </svg>
+    <div class="ring-text"><span class="ring-pct" id="r-pct">0%</span><span class="ring-lbl">SCORE</span></div>
+  </div>
+  <h2 id="r-verdict">Results</h2>
+  <p id="r-sub"></p>
+  <div class="result-grid">
+    <div class="rstat"><span class="rv" style="color:var(--green)" id="r-correct">0</span><span class="rl">Correct</span></div>
+    <div class="rstat"><span class="rv" style="color:var(--red)" id="r-wrong">0</span><span class="rl">Wrong</span></div>
+    <div class="rstat"><span class="rv" style="color:var(--yellow)" id="r-skip">0</span><span class="rl">Skipped</span></div>
+  </div>
+  <button class="btn-start" onclick="resetQuiz()">↺ Retake Exam</button>
+</div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<div class="nav-bar" id="nav-bar" style="display:none">
+  <button class="btn-prev" onclick="prevQ()">← Prev</button>
+  <div class="q-indicator" id="nav-indicator">1 / 179</div>
+  <button class="btn-nav-next" onclick="nextQ()">Next →</button>
+</div>
+
+<script>
+const QUESTIONS = [
+// ─── TOPIC 101 – SYSTEM ARCHITECTURE ───────────────────────────────────────
+{id:1,topic:"101",text:"Which SysV init configuration file should be modified to disable the ctrl-alt-delete key combination?",
+ opts:["A. /etc/keys","B. /proc/keys","C. /etc/inittab","D. /proc/inittab","E. /etc/reboot"],
+ correct:["C"],multi:false,
+ explain:"The /etc/inittab file controls SysV init actions, including the ca:: ctrlaltdel entry that defines what happens when Ctrl+Alt+Del is pressed. Comment that line out to disable it."},
+
+{id:2,topic:"101",text:"During a system boot cycle, what program is executed after the BIOS completes its tasks?",
+ opts:["A. The bootloader","B. The inetd program","C. The init program","D. The kernel"],
+ correct:["A"],multi:false,
+ explain:"After POST, the BIOS locates the boot device and transfers control to the bootloader (e.g., GRUB). The bootloader then loads the kernel."},
+
+{id:3,topic:"101",text:"Which run levels should NEVER be declared as the default run level when using SysV init? (Choose TWO)",
+ opts:["A. 0","B. 1","C. 3","D. 5","E. 6"],
+ correct:["A","E"],multi:true,
+ explain:"Runlevel 0 = halt and runlevel 6 = reboot. Setting either as default would cause the system to immediately halt or reboot on startup."},
+
+{id:4,topic:"101",text:"Which of the following statements is correct when talking about /proc/?",
+ opts:["A. All changes to files in /proc/ are stored in /etc/proc.d/ and restored on reboot.",
+       "B. All files within /proc/ are read-only and their contents cannot be changed.",
+       "C. All changes to files in /proc/ are immediately recognized by the kernel.",
+       "D. All files within /proc/ are only readable by the root user."],
+ correct:["C"],multi:false,
+ explain:"/proc/ is a virtual filesystem. Writing to its files (e.g., /proc/sys/net/...) immediately changes kernel parameters at runtime. Changes are not persistent across reboots."},
+
+{id:5,topic:"101",text:"What of the following statements are true regarding /dev/ when using udev? (Choose TWO)",
+ opts:["A. Entries for all possible devices get created on boot even if those devices are not connected.",
+       "B. Additional rules for udev can be created by adding them to /etc/udev/rules.d/.",
+       "C. When using udev, it is not possible to create block or character devices in /dev/ using mknod.",
+       "D. The /dev/ directory is a filesystem of type tmpfs and is mounted by udev during system startup.",
+       "E. The content of /dev/ is stored in /etc/udev/dev and is restored during system startup."],
+ correct:["B","D"],multi:true,
+ explain:"udev creates only devices that exist. Custom rules go to /etc/udev/rules.d/. /dev is a tmpfs (actually devtmpfs) populated dynamically at boot."},
+
+{id:6,topic:"101",text:"Which of the following information is stored within the BIOS? (Choose TWO)",
+ opts:["A. Boot device order","B. Linux kernel version","C. Timezone","D. Hardware configuration","E. The system's hostname"],
+ correct:["A","D"],multi:true,
+ explain:"BIOS stores hardware configuration (CPU, memory, device settings) and boot device order. Kernel version, timezone, and hostname are OS-level information."},
+
+{id:7,topic:"101",text:"Which of the following commands reboots the system when using SysV init? (Choose TWO)",
+ opts:["A. shutdown -r now","B. shutdown -r \"rebooting\"","C. telinit 6","D. telinit 0","E. shutdown -k now \"rebooting\""],
+ correct:["A","C"],multi:true,
+ explain:"shutdown -r now reboots immediately; telinit 6 switches to runlevel 6 (reboot). telinit 0 halts. shutdown -k sends a warning without actually rebooting."},
+
+{id:8,topic:"101",text:"Which of the following are init systems used within Linux systems? (Choose THREE)",
+ opts:["A. startd","B. systemd","C. Upstart","D. SysInit","E. SysV init"],
+ correct:["B","C","E"],multi:true,
+ explain:"systemd, Upstart, and SysV init are all real Linux init systems. startd and SysInit do not exist as Linux init systems."},
+
+{id:9,topic:"101",text:"SIMULATION — Which file in the /proc filesystem lists parameters passed from the bootloader to the kernel? (Enter file name only, no path)",
+ sim:true,
+ correct:["cmdline"],
+ explain:"/proc/cmdline contains the kernel command line parameters as passed by the bootloader (e.g., GRUB)."},
+
+{id:10,topic:"101",text:"What information can the lspci command display about the system hardware? (Choose THREE)",
+ opts:["A. Device IRQ settings","B. PCI bus speed","C. System battery type","D. Device vendor identification","E. Ethernet MAC address"],
+ correct:["A","B","D"],multi:true,
+ explain:"lspci shows PCI device info including IRQ, bus speed, and vendor IDs. MAC addresses are shown by ip/ifconfig, and battery info by acpi or upower."},
+
+{id:11,topic:"101",text:"Which of the following commands brings a system running SysV init into a state safe for maintenance tasks? (Choose TWO)",
+ opts:["A. shutdown -R 1 now","B. shutdown -single now","C. init 1","D. telinit 1","E. runlevel 1"],
+ correct:["C","D"],multi:true,
+ explain:"init 1 and telinit 1 switch to runlevel 1 (single-user / maintenance mode). The other options are invalid or non-existent."},
+
+{id:12,topic:"101",text:"What is the first program that is usually started, at boot time, by the Linux kernel when using SysV init?",
+ opts:["A. /lib/init.so","B. /sbin/init","C. /etc/rc.d/rcinit","D. /proc/sys/kernel/init","E. /boot/init"],
+ correct:["B"],multi:false,
+ explain:"The Linux kernel starts /sbin/init as PID 1 when using SysV init. This is the parent of all user-space processes."},
+
+{id:13,topic:"101",text:"Which command can be used to display detailed information about USB devices connected to the system?",
+ opts:["A. lsusb","B. usbinfo","C. lspci -usb","D. dmesg -usb"],
+ correct:["A"],multi:false,
+ explain:"lsusb lists USB buses and connected devices. It can show vendor IDs, product IDs, and with -v, detailed device descriptors."},
+
+{id:14,topic:"101",text:"Where does the kernel store information about detected hardware during the boot process?",
+ opts:["A. /etc/hardware","B. /var/log/hardware","C. /proc/","D. /sys/"],
+ correct:["C"],multi:false,
+ explain:"The /proc/ virtual filesystem exposes kernel data structures, including detected hardware. /sys/ (sysfs) also provides hardware info via the device model."},
+
+{id:15,topic:"101",text:"Which of the following commands correctly shows all kernel modules currently loaded?",
+ opts:["A. modinfo","B. lsmod","C. insmod","D. modprobe -l"],
+ correct:["B"],multi:false,
+ explain:"lsmod reads /proc/modules and displays all currently loaded kernel modules with their sizes and usage counts."},
+
+{id:16,topic:"101",text:"Which command is used to load a kernel module and automatically resolve dependencies?",
+ opts:["A. insmod","B. modinfo","C. modprobe","D. lsmod"],
+ correct:["C"],multi:false,
+ explain:"modprobe loads a module and its dependencies from /lib/modules/. insmod loads a single module without dependency handling."},
+
+{id:17,topic:"101",text:"Which directory contains the configuration files for udev rules?",
+ opts:["A. /etc/udev/rules.d/","B. /proc/udev/","C. /dev/rules/","D. /lib/udev/conf/"],
+ correct:["A"],multi:false,
+ explain:"Custom udev rules are placed in /etc/udev/rules.d/. System-provided rules are in /lib/udev/rules.d/. Files are processed in lexical order."},
+
+{id:18,topic:"101",text:"Which file contains information about the CPU(s) in a Linux system?",
+ opts:["A. /etc/cpuinfo","B. /proc/cpuinfo","C. /sys/cpu/info","D. /dev/cpu"],
+ correct:["B"],multi:false,
+ explain:"/proc/cpuinfo provides detailed information about each CPU core including model name, clock speed, cache size, and flags."},
+
+{id:19,topic:"101",text:"Which command removes a loaded kernel module?",
+ opts:["A. modprobe -r","B. rmmod","C. Both A and B","D. delmod"],
+ correct:["C"],multi:false,
+ explain:"Both rmmod and modprobe -r can remove a loaded kernel module. modprobe -r also handles removing dependencies no longer needed."},
+
+{id:20,topic:"101",text:"Which SysV init runlevel typically corresponds to multi-user mode with networking and a graphical display manager?",
+ opts:["A. 1","B. 3","C. 5","D. 6"],
+ correct:["C"],multi:false,
+ explain:"On most SysV-based systems, runlevel 5 is multi-user with networking and a graphical login. Runlevel 3 is multi-user with networking but no GUI."},
+
+{id:21,topic:"101",text:"Which command displays the current and previous runlevel when using SysV init?",
+ opts:["A. telinit -s","B. who -r","C. runlevel","D. init -q"],
+ correct:["C"],multi:false,
+ explain:"The runlevel command prints the previous and current runlevel. If there is no previous runlevel, it prints N."},
+
+{id:22,topic:"101",text:"Which of the following is the correct location for system-wide D-Bus configuration files?",
+ opts:["A. /etc/dbus-1/system.d/","B. /proc/bus/dbus/","C. /sys/bus/dbus/","D. /var/dbus/conf/"],
+ correct:["A"],multi:false,
+ explain:"D-Bus system configuration files are found in /etc/dbus-1/system.d/ for system-wide policies."},
+
+{id:23,topic:"101",text:"Which virtual filesystem provides an interface to kernel objects and their attributes through a hierarchy of files and directories?",
+ opts:["A. /proc","B. /sys","C. /dev","D. /run"],
+ correct:["B"],multi:false,
+ explain:"/sys (sysfs) represents kernel objects, attributes, and relationships. /proc exposes process and system info. /dev contains device files."},
+
+{id:24,topic:"101",text:"When viewing output of dmesg, which type of messages would you expect to see?",
+ opts:["A. Application startup logs","B. Kernel ring buffer messages","C. User login records","D. Cron job outputs"],
+ correct:["B"],multi:false,
+ explain:"dmesg displays the kernel ring buffer, which contains hardware detection messages, driver initialization, and other kernel-level events."},
+
+{id:25,topic:"101",text:"Which of the following is a characteristic of UEFI compared to traditional BIOS?",
+ opts:["A. UEFI can only boot from drives smaller than 2 TB",
+       "B. UEFI uses a GPT partition table and can boot from larger drives",
+       "C. UEFI does not support Secure Boot",
+       "D. UEFI is slower to initialize than traditional BIOS"],
+ correct:["B"],multi:false,
+ explain:"UEFI uses GPT and supports drives larger than 2 TB. It also supports Secure Boot, faster initialization, and a graphical pre-boot environment."},
+
+{id:26,topic:"101",text:"Which command provides information about a specific kernel module, including its parameters?",
+ opts:["A. lsmod","B. modinfo","C. modprobe","D. insmod"],
+ correct:["B"],multi:false,
+ explain:"modinfo displays information about a module file, including its filename, description, license, author, and supported parameters."},
+
+{id:27,topic:"101",text:"Which file lists currently mounted filesystems as seen by the kernel?",
+ opts:["A. /etc/fstab","B. /etc/mtab","C. /proc/mounts","D. /var/log/mounts"],
+ correct:["C"],multi:false,
+ explain:"/proc/mounts is a kernel-provided virtual file showing all currently mounted filesystems. /etc/fstab defines which filesystems to mount at boot."},
+
+{id:28,topic:"101",text:"Which of the following commands will display the amount of RAM currently free on a system?",
+ opts:["A. free","B. meminfo","C. ramstat","D. sysinfo"],
+ correct:["A"],multi:false,
+ explain:"The free command reads /proc/meminfo and displays total, used, and free memory for both RAM and swap."},
+
+{id:29,topic:"101",text:"SIMULATION — What is the name of the file under /proc that contains information about currently loaded kernel modules? (File name only, no path)",
+ sim:true,
+ correct:["modules"],
+ explain:"/proc/modules lists all currently loaded kernel modules, equivalent to the output of lsmod."},
+
+{id:30,topic:"101",text:"Which of the following best describes the role of the MBR (Master Boot Record)?",
+ opts:["A. It stores the kernel image","B. It contains partition table and bootstrap code in the first 512 bytes of a disk",
+       "C. It is a partition type used for booting","D. It is a GRUB configuration file"],
+ correct:["B"],multi:false,
+ explain:"The MBR occupies the first 512 bytes of a disk and contains the partition table and a small boot program that loads the bootloader."},
+
+// ─── TOPIC 102 – LINUX INSTALLATION & PACKAGE MANAGEMENT ───────────────────
+{id:31,topic:"102",text:"Which of the following is a valid swap partition type identifier in a partition table?",
+ opts:["A. 0x82","B. 0x83","C. 0x8e","D. 0xfd"],
+ correct:["A"],multi:false,
+ explain:"Linux swap partitions use type 0x82. Linux native filesystems use 0x83, Linux LVM uses 0x8e, and Linux RAID autodetect uses 0xfd."},
+
+{id:32,topic:"102",text:"Which partition is required when using GRUB2 with a GPT-partitioned disk and BIOS (non-UEFI) boot?",
+ opts:["A. /boot partition","B. BIOS boot partition (type EF02)","C. EFI System Partition","D. swap partition"],
+ correct:["B"],multi:false,
+ explain:"GRUB2 on a BIOS/GPT system requires a small (1 MB) BIOS boot partition (type EF02) where GRUB can embed its second-stage code."},
+
+{id:33,topic:"102",text:"Which command is used to install a .deb package file that has already been downloaded?",
+ opts:["A. apt install","B. dpkg -i","C. rpm -i","D. yum install"],
+ correct:["B"],multi:false,
+ explain:"dpkg -i (or --install) installs a .deb package file directly. apt handles downloading and dependency resolution on top of dpkg."},
+
+{id:34,topic:"102",text:"Which command is used to update the list of available packages in Debian-based systems?",
+ opts:["A. apt-get upgrade","B. dpkg --refresh","C. apt-get update","D. apt-cache update"],
+ correct:["C"],multi:false,
+ explain:"apt-get update (or apt update) downloads fresh package lists from repositories. apt-get upgrade installs newer versions of installed packages."},
+
+{id:35,topic:"102",text:"Which file on Debian-based systems lists the software repositories used by apt?",
+ opts:["A. /etc/apt/packages.conf","B. /etc/apt/sources.list","C. /etc/dpkg/repos","D. /var/cache/apt/sources"],
+ correct:["B"],multi:false,
+ explain:"/etc/apt/sources.list (and files in /etc/apt/sources.list.d/) define the repositories that apt uses to find and download packages."},
+
+{id:36,topic:"102",text:"Which RPM command verifies the integrity of an installed package?",
+ opts:["A. rpm -V packagename","B. rpm -q packagename","C. rpm -i packagename","D. rpm -e packagename"],
+ correct:["A"],multi:false,
+ explain:"rpm -V (--verify) checks installed package files against the RPM database for changes in size, permissions, MD5 sum, etc."},
+
+{id:37,topic:"102",text:"Which command on RPM-based systems lists all installed packages?",
+ opts:["A. rpm -qa","B. rpm -ql","C. yum list","D. Both A and C"],
+ correct:["D"],multi:false,
+ explain:"rpm -qa (query all) and yum list installed both display all installed packages on RPM-based systems."},
+
+{id:38,topic:"102",text:"Which command removes a package on a Debian-based system while keeping its configuration files?",
+ opts:["A. apt-get purge","B. dpkg --remove","C. apt-get remove","D. dpkg --purge"],
+ correct:["C"],multi:false,
+ explain:"apt-get remove uninstalls a package but retains configuration files. apt-get purge and dpkg --purge remove the package and its config files."},
+
+{id:39,topic:"102",text:"Which command on a Debian-based system removes a package AND its configuration files?",
+ opts:["A. apt-get remove","B. apt-get purge","C. dpkg -r","D. apt-get clean"],
+ correct:["B"],multi:false,
+ explain:"apt-get purge (or dpkg --purge) removes a package along with all its configuration files."},
+
+{id:40,topic:"102",text:"Which command would you use to find which installed RPM package a file belongs to?",
+ opts:["A. rpm -qf /path/to/file","B. rpm -qi /path/to/file","C. rpm -ql packagename","D. rpm -qa /path/to/file"],
+ correct:["A"],multi:false,
+ explain:"rpm -qf (--query --file) identifies which installed package owns a given file path."},
+
+{id:41,topic:"102",text:"Which of the following correctly describes a shared library?",
+ opts:["A. A library compiled directly into each program that uses it",
+       "B. A library loaded into memory once and shared by multiple programs at runtime",
+       "C. A library only available to root users",
+       "D. A library stored in /etc/lib/"],
+ correct:["B"],multi:false,
+ explain:"Shared (dynamic) libraries are loaded once into memory and can be used by multiple programs simultaneously, saving memory compared to static libraries."},
+
+{id:42,topic:"102",text:"Which command updates the shared library cache after new libraries have been installed?",
+ opts:["A. libconfig","B. ldconfig","C. updatelib","D. ld-config"],
+ correct:["B"],multi:false,
+ explain:"ldconfig updates /etc/ld.so.cache by scanning /etc/ld.so.conf and standard library directories, making new libraries available to programs."},
+
+{id:43,topic:"102",text:"Which file configures the directories searched for shared libraries?",
+ opts:["A. /etc/ld.so.cache","B. /etc/ld.so.conf","C. /etc/libpath","D. /etc/ldconfig"],
+ correct:["B"],multi:false,
+ explain:"/etc/ld.so.conf lists directories (one per line or via includes) where ldconfig searches for shared libraries."},
+
+{id:44,topic:"102",text:"What environment variable can be used to specify additional directories to search for shared libraries at runtime?",
+ opts:["A. LIBRARY_PATH","B. LIB_PATH","C. LD_LIBRARY_PATH","D. SHARED_LIB_PATH"],
+ correct:["C"],multi:false,
+ explain:"LD_LIBRARY_PATH is a colon-separated list of directories searched before the standard library paths when a program is executed."},
+
+{id:45,topic:"102",text:"Which command displays the shared library dependencies of a given executable?",
+ opts:["A. libdep","B. ldd","C. readelf","D. objdump"],
+ correct:["B"],multi:false,
+ explain:"ldd prints the shared libraries required by a program and whether they can be found, useful for diagnosing 'library not found' errors."},
+
+{id:46,topic:"102",text:"Which GRUB 2 configuration file is automatically generated and should NOT be manually edited?",
+ opts:["A. /etc/grub.conf","B. /boot/grub2/grub.cfg","C. /etc/default/grub","D. /etc/grub.d/40_custom"],
+ correct:["B"],multi:false,
+ explain:"/boot/grub2/grub.cfg is auto-generated by grub2-mkconfig. User settings go in /etc/default/grub and /etc/grub.d/."},
+
+{id:47,topic:"102",text:"Which command regenerates the GRUB 2 configuration file?",
+ opts:["A. grub-install","B. update-grub","C. grub2-mkconfig -o /boot/grub2/grub.cfg","D. Both B and C"],
+ correct:["D"],multi:false,
+ explain:"update-grub is a wrapper script for grub-mkconfig. On RPM systems, grub2-mkconfig -o /boot/grub2/grub.cfg is used directly."},
+
+{id:48,topic:"102",text:"Which file is used to customize GRUB 2 settings such as the default boot entry and timeout?",
+ opts:["A. /boot/grub/menu.lst","B. /etc/default/grub","C. /boot/grub2/grub.cfg","D. /etc/grub.conf"],
+ correct:["B"],multi:false,
+ explain:"/etc/default/grub contains user-editable variables like GRUB_DEFAULT, GRUB_TIMEOUT, and GRUB_CMDLINE_LINUX. Changes require running update-grub."},
+
+{id:49,topic:"102",text:"On a system using apt, which command would display information about an available but not installed package?",
+ opts:["A. dpkg -s packagename","B. apt-cache show packagename","C. apt-get info packagename","D. dpkg -l packagename"],
+ correct:["B"],multi:false,
+ explain:"apt-cache show displays detailed information about a package including description, dependencies, and size — whether installed or not."},
+
+{id:50,topic:"102",text:"Which command would you use to search for a package by keyword on a Debian-based system?",
+ opts:["A. apt-cache search keyword","B. dpkg -f keyword","C. apt-get find keyword","D. dpkg --search keyword"],
+ correct:["A"],multi:false,
+ explain:"apt-cache search searches package names and descriptions for the given keyword. dpkg --search finds which installed package owns a file."},
+
+{id:51,topic:"102",text:"Which of the following is the correct minimum partition layout to install Linux?",
+ opts:["A. /home only","B. /boot and /usr","C. / (root) only","D. / (root) and /swap"],
+ correct:["C"],multi:false,
+ explain:"Linux requires only a root (/) partition to function. Swap can be a file rather than a partition. Additional partitions are optional best practices."},
+
+{id:52,topic:"102",text:"Which YUM / DNF command removes a package and its unused dependencies?",
+ opts:["A. yum remove","B. yum autoremove","C. yum erase","D. dnf purge"],
+ correct:["B"],multi:false,
+ explain:"yum autoremove (or dnf autoremove) removes a package and any dependencies that were installed with it and are no longer needed."},
+
+{id:53,topic:"102",text:"Which file in a Debian package contains the list of files installed by that package?",
+ opts:["A. /var/lib/dpkg/info/<pkg>.list","B. /etc/dpkg/<pkg>.conf","C. /var/cache/dpkg/<pkg>.files","D. /usr/lib/dpkg/<pkg>.manifest"],
+ correct:["A"],multi:false,
+ explain:"dpkg stores the file list for each installed package in /var/lib/dpkg/info/<package>.list."},
+
+{id:54,topic:"102",text:"Which command installs GRUB to the MBR of /dev/sda?",
+ opts:["A. grub-install /dev/sda1","B. grub-install /dev/sda","C. grub-setup /dev/sda","D. grub-mkconfig /dev/sda"],
+ correct:["B"],multi:false,
+ explain:"grub-install followed by a disk device (not a partition) installs GRUB to the MBR (or EFI partition). /dev/sda without a number refers to the whole disk."},
+
+{id:55,topic:"102",text:"Which RPM command installs a package that is stored locally as a .rpm file?",
+ opts:["A. rpm -U package.rpm","B. rpm -i package.rpm","C. rpm -e package.rpm","D. Both A and B"],
+ correct:["D"],multi:false,
+ explain:"rpm -i installs a package. rpm -U upgrades (or installs if not present). Both will install a .rpm file; -U is generally preferred as it handles upgrades."},
+
+{id:56,topic:"102",text:"Which command on a Debian system displays the post-install script stored within a .deb package?",
+ opts:["A. dpkg -I package.deb","B. dpkg -e package.deb","C. apt-get show package","D. dpkg --script package.deb"],
+ correct:["A"],multi:false,
+ explain:"dpkg -I (--info) displays the control file information including maintainer scripts (preinst, postinst, prerm, postrm) of a .deb package."},
+
+{id:57,topic:"102",text:"Which of the following best describes a Linux container as a form of virtualization?",
+ opts:["A. It emulates hardware for each container","B. Containers share the host kernel and isolate processes using namespaces and cgroups",
+       "C. Each container has its own kernel","D. Containers require a hypervisor"],
+ correct:["B"],multi:false,
+ explain:"Linux containers (LXC, Docker) share the host kernel and use kernel namespaces and cgroups for isolation — unlike VMs which emulate hardware."},
+
+{id:58,topic:"102",text:"What file in an RPM-based system lists the enabled repositories?",
+ opts:["A. /etc/yum.conf","B. /etc/yum.repos.d/*.repo","C. /etc/rpm/repos","D. /var/lib/rpm/repos"],
+ correct:["B"],multi:false,
+ explain:"YUM/DNF repository configuration files with .repo extension are stored in /etc/yum.repos.d/. /etc/yum.conf sets global YUM configuration."},
+
+{id:59,topic:"102",text:"Which of the following commands converts a .rpm package to a .deb package?",
+ opts:["A. dpkg-convert","B. rpm2deb","C. alien","D. convert-pkg"],
+ correct:["C"],multi:false,
+ explain:"The alien utility converts between different package formats including RPM to DEB, TGZ, and others."},
+
+{id:60,topic:"102",text:"Which GRUB 2 file can be used to add custom menu entries?",
+ opts:["A. /etc/default/grub","B. /etc/grub.d/40_custom","C. /boot/grub2/grub.cfg","D. /etc/grub.d/00_header"],
+ correct:["B"],multi:false,
+ explain:"/etc/grub.d/40_custom is provided for user-defined custom GRUB menu entries that persist through grub config regeneration."},
+
+{id:61,topic:"102",text:"Which command displays the package that provides a specific file on an RPM-based system?",
+ opts:["A. rpm -qp /path/to/file","B. rpm -qf /path/to/file","C. yum provides /path/to/file","D. Both B and C"],
+ correct:["D"],multi:false,
+ explain:"rpm -qf finds which installed package owns a file. yum provides can find packages (installed or available) that provide a file."},
+
+{id:62,topic:"102",text:"What is the purpose of the /boot partition?",
+ opts:["A. Contains user home directories","B. Contains the kernel, initramfs, and bootloader files needed to start the system",
+       "C. Contains log files","D. Contains temporary files"],
+ correct:["B"],multi:false,
+ explain:"/boot holds the kernel (vmlinuz), initial RAM disk (initramfs/initrd), and bootloader stage files needed during the early boot process."},
+
+{id:63,topic:"102",text:"Which of the following commands on a Debian system would show all packages that depend on a given package?",
+ opts:["A. apt-cache rdepends packagename","B. dpkg --dependents packagename","C. apt-cache depends packagename","D. dpkg -r packagename"],
+ correct:["A"],multi:false,
+ explain:"apt-cache rdepends lists packages that have a dependency on the specified package (reverse dependencies). apt-cache depends shows what a package requires."},
+
+{id:64,topic:"102",text:"Which tool is commonly used to manage software on systems using the Snap package format?",
+ opts:["A. apt","B. snap","C. flatpak","D. rpm"],
+ correct:["B"],multi:false,
+ explain:"The snap command manages Snap packages (developed by Canonical). Snaps are self-contained packages that work across different Linux distributions."},
+
+{id:65,topic:"102",text:"Which command lists all files provided by an installed RPM package?",
+ opts:["A. rpm -ql packagename","B. rpm -qi packagename","C. rpm -qd packagename","D. rpm -qR packagename"],
+ correct:["A"],multi:false,
+ explain:"rpm -ql (--query --list) lists all files installed by a package. -qi shows info, -qd lists documentation files, -qR lists dependencies."},
+
+{id:66,topic:"102",text:"What is the typical size recommendation for a swap partition on a system with 4 GB of RAM that will use hibernation?",
+ opts:["A. 512 MB","B. 2 GB","C. Equal to RAM (4 GB)","D. At least equal to RAM, typically 4–8 GB"],
+ correct:["D"],multi:false,
+ explain:"For hibernation, swap must be at least equal to the amount of RAM so the entire memory state can be written to disk. Extra space is recommended."},
+
+{id:67,topic:"102",text:"Which of the following is a feature of the YUM package manager compared to RPM?",
+ opts:["A. YUM can install .deb packages","B. YUM automatically resolves and installs dependencies",
+       "C. YUM uses a different package format than RPM","D. YUM can only install local packages"],
+ correct:["B"],multi:false,
+ explain:"YUM (and DNF) add automatic dependency resolution and repository management on top of RPM. They still use the .rpm package format."},
+
+{id:68,topic:"102",text:"Which command on a Debian-based system removes packages that were automatically installed as dependencies and are no longer needed?",
+ opts:["A. apt-get clean","B. apt-get autoclean","C. apt-get autoremove","D. dpkg --remove-auto"],
+ correct:["C"],multi:false,
+ explain:"apt-get autoremove removes packages that were installed as dependencies but are no longer required by any installed package."},
+
+{id:69,topic:"102",text:"Which file should be modified to configure the kernel parameters passed by GRUB 2 at boot time?",
+ opts:["A. /boot/grub2/grub.cfg","B. /etc/default/grub (GRUB_CMDLINE_LINUX)","C. /etc/grub.d/10_linux","D. /etc/grub.conf"],
+ correct:["B"],multi:false,
+ explain:"GRUB_CMDLINE_LINUX in /etc/default/grub holds kernel boot parameters. After editing, run update-grub or grub2-mkconfig to regenerate grub.cfg."},
+
+{id:70,topic:"102",text:"Which command downloads a package and all its dependencies without installing them on a Debian system?",
+ opts:["A. apt-get install --dry-run","B. apt-get download","C. apt-get install --download-only","D. dpkg --fetch"],
+ correct:["C"],multi:false,
+ explain:"apt-get install --download-only (or -d) downloads packages to the cache (/var/cache/apt/archives/) without installing them."},
+
+// ─── TOPIC 103 – GNU AND UNIX COMMANDS ──────────────────────────────────────
+{id:71,topic:"103",text:"Which command displays the first 10 lines of a file by default?",
+ opts:["A. tail","B. cat","C. head","D. more"],
+ correct:["C"],multi:false,
+ explain:"head prints the first N lines of a file (default 10). Use -n to specify a different number of lines."},
+
+{id:72,topic:"103",text:"Which command displays the last 10 lines of a file?",
+ opts:["A. head","B. tail","C. less","D. more"],
+ correct:["B"],multi:false,
+ explain:"tail prints the last N lines of a file (default 10). tail -f follows a file as it grows, useful for monitoring log files."},
+
+{id:73,topic:"103",text:"Which metacharacter is used to redirect standard output to a file, OVERWRITING its existing content?",
+ opts:["A. >>","B. |","C. >","D. <"],
+ correct:["C"],multi:false,
+ explain:"The > operator redirects stdout to a file, truncating any existing content. >> appends to the file instead."},
+
+{id:74,topic:"103",text:"Which metacharacter is used to redirect standard output to a file, APPENDING to its existing content?",
+ opts:["A. >","B. >>","C. |","D. &>"],
+ correct:["B"],multi:false,
+ explain:">> appends stdout to a file, preserving existing content. > overwrites, | pipes to another command."},
+
+{id:75,topic:"103",text:"Which command counts lines, words, and characters in a file?",
+ opts:["A. count","B. wc","C. stat","D. chars"],
+ correct:["B"],multi:false,
+ explain:"wc (word count) by default prints newline count (-l), word count (-w), and byte count (-c) for each input file."},
+
+{id:76,topic:"103",text:"Which command searches for a pattern within files using regular expressions?",
+ opts:["A. find","B. locate","C. grep","D. sed"],
+ correct:["C"],multi:false,
+ explain:"grep (global regular expression print) searches file contents for lines matching a pattern. It supports basic (-G) and extended (-E) regular expressions."},
+
+{id:77,topic:"103",text:"Which command is used to sort the lines of a text file?",
+ opts:["A. order","B. sort","C. uniq","D. awk"],
+ correct:["B"],multi:false,
+ explain:"sort arranges lines of text in alphabetical or numeric order. Common options include -r (reverse), -n (numeric), -k (key field)."},
+
+{id:78,topic:"103",text:"Which command removes duplicate adjacent lines from sorted input?",
+ opts:["A. sort -u","B. uniq","C. Both A and B","D. dedup"],
+ correct:["C"],multi:false,
+ explain:"uniq removes consecutive duplicate lines. sort -u sorts and removes duplicates. Both are commonly used together (sort | uniq)."},
+
+{id:79,topic:"103",text:"Which command replaces or deletes characters in a stream?",
+ opts:["A. sed","B. tr","C. awk","D. cut"],
+ correct:["B"],multi:false,
+ explain:"tr (translate) replaces, squeezes, or deletes characters from stdin. For example: echo 'hello' | tr 'a-z' 'A-Z' converts to uppercase."},
+
+{id:80,topic:"103",text:"Which command extracts specific fields from each line of text?",
+ opts:["A. grep","B. sed","C. cut","D. split"],
+ correct:["C"],multi:false,
+ explain:"cut extracts columns from files using delimiters (-d) and field positions (-f), or by character position (-c). Common with CSV/TSV data."},
+
+{id:81,topic:"103",text:"What does the pipe operator (|) do?",
+ opts:["A. Redirects output to a file","B. Connects stdout of one command to stdin of another",
+       "C. Runs two commands simultaneously","D. Appends output to a file"],
+ correct:["B"],multi:false,
+ explain:"A pipe connects the standard output of one command directly to the standard input of the next, enabling command chaining like ls | grep .conf | wc -l."},
+
+{id:82,topic:"103",text:"Which command finds files in a directory hierarchy based on criteria such as name, size, or modification time?",
+ opts:["A. locate","B. which","C. find","D. grep -r"],
+ correct:["C"],multi:false,
+ explain:"find traverses directory trees and matches files by name (-name), size (-size), time (-mtime), owner (-user), and many other criteria."},
+
+{id:83,topic:"103",text:"Which command displays the contents of a file while allowing forward and backward navigation?",
+ opts:["A. cat","B. more","C. less","D. head"],
+ correct:["C"],multi:false,
+ explain:"less allows bi-directional navigation through a file. more only allows forward paging. less is the preferred pager for most use cases."},
+
+{id:84,topic:"103",text:"Which command is used to display the present working directory?",
+ opts:["A. cd","B. ls","C. pwd","D. dir"],
+ correct:["C"],multi:false,
+ explain:"pwd (print working directory) outputs the absolute path of the current directory."},
+
+{id:85,topic:"103",text:"Which command creates a new empty file or updates the timestamp of an existing file?",
+ opts:["A. new","B. touch","C. create","D. mkfile"],
+ correct:["B"],multi:false,
+ explain:"touch creates a zero-byte file if it doesn't exist, or updates the access and modification timestamps if it does."},
+
+{id:86,topic:"103",text:"Which command copies files and directories recursively?",
+ opts:["A. cp -r","B. mv","C. copy","D. rsync only"],
+ correct:["A"],multi:false,
+ explain:"cp -r (or --recursive) copies directories and their entire contents. rsync is an alternative with more features like synchronization."},
+
+{id:87,topic:"103",text:"Which command renames a file or moves it to another location?",
+ opts:["A. cp","B. rename","C. mv","D. ln"],
+ correct:["C"],multi:false,
+ explain:"mv (move) renames a file or directory, or moves it to a different location. Within the same filesystem it is a metadata-only operation."},
+
+{id:88,topic:"103",text:"Which command deletes a file?",
+ opts:["A. del","B. rm","C. erase","D. unlink only"],
+ correct:["B"],multi:false,
+ explain:"rm removes files. rm -r removes directories recursively. rm -f forces removal without prompting. rm -rf is both."},
+
+{id:89,topic:"103",text:"Which command creates a new directory?",
+ opts:["A. md","B. newdir","C. mkdir","D. dir -c"],
+ correct:["C"],multi:false,
+ explain:"mkdir creates one or more directories. mkdir -p creates parent directories as needed without error if they already exist."},
+
+{id:90,topic:"103",text:"Which command removes an empty directory?",
+ opts:["A. rm -d","B. rmdir","C. Both A and B","D. rm -r"],
+ correct:["C"],multi:false,
+ explain:"rmdir removes empty directories. rm -d also removes an empty directory. rm -r removes directories with content."},
+
+{id:91,topic:"103",text:"What does the command 'ls -la' display?",
+ opts:["A. Long listing of all files including hidden files",
+       "B. Files sorted by last access time",
+       "C. Large files only",
+       "D. Links and archives only"],
+ correct:["A"],multi:false,
+ explain:"ls -l provides a long listing (permissions, links, owner, size, date). -a includes hidden files (those starting with .)."},
+
+{id:92,topic:"103",text:"Which command sends output to both stdout AND a file simultaneously?",
+ opts:["A. split","B. tee","C. pipe","D. fork"],
+ correct:["B"],multi:false,
+ explain:"tee reads from stdin and writes to both stdout and one or more files. Useful in pipelines to capture intermediate output."},
+
+{id:93,topic:"103",text:"Which command displays a list of currently running processes for the current user?",
+ opts:["A. top","B. jobs","C. ps","D. proc"],
+ correct:["C"],multi:false,
+ explain:"ps (process status) lists processes. ps aux shows all processes. ps shows only processes for the current terminal by default."},
+
+{id:94,topic:"103",text:"Which command provides a real-time, dynamic view of running processes and system resource usage?",
+ opts:["A. ps aux","B. top","C. htop","D. Both B and C"],
+ correct:["D"],multi:false,
+ explain:"top and htop both provide real-time process monitoring. htop is an enhanced interactive version. Both update dynamically."},
+
+{id:95,topic:"103",text:"Which signal is sent by the kill command by default (with no signal specified)?",
+ opts:["A. SIGKILL (9)","B. SIGHUP (1)","C. SIGTERM (15)","D. SIGINT (2)"],
+ correct:["C"],multi:false,
+ explain:"kill without a signal number sends SIGTERM (15), which requests graceful termination. The process can catch and handle this signal."},
+
+{id:96,topic:"103",text:"Which signal CANNOT be caught or ignored by a process?",
+ opts:["A. SIGTERM","B. SIGHUP","C. SIGKILL","D. SIGUSR1"],
+ correct:["C"],multi:false,
+ explain:"SIGKILL (9) and SIGSTOP cannot be caught, blocked, or ignored. The kernel handles them directly to forcibly terminate or stop a process."},
+
+{id:97,topic:"103",text:"Which command changes the scheduling priority of a process?",
+ opts:["A. nice","B. renice","C. priority","D. sched"],
+ correct:["B"],multi:false,
+ explain:"renice changes the priority (nice value) of a running process by PID. nice sets the priority when starting a new process."},
+
+{id:98,topic:"103",text:"Which nice value represents the LOWEST priority?",
+ opts:["A. -20","B. 0","C. 19","D. 20"],
+ correct:["C"],multi:false,
+ explain:"Nice values range from -20 (highest priority) to 19 (lowest priority). Normal processes start at 0. Lower nice = higher CPU priority."},
+
+{id:99,topic:"103",text:"Which command runs a process immune to hangup signals, allowing it to continue after logout?",
+ opts:["A. daemon","B. nohup","C. disown","D. bg"],
+ correct:["B"],multi:false,
+ explain:"nohup runs a command ignoring SIGHUP, so it continues after the terminal is closed. Combine with & to run in background."},
+
+{id:100,topic:"103",text:"Which command displays how long the system has been running, along with load averages?",
+ opts:["A. sysinfo","B. time","C. uptime","D. load"],
+ correct:["C"],multi:false,
+ explain:"uptime shows current time, uptime duration, number of logged-in users, and 1/5/15-minute load averages."},
+
+{id:101,topic:"103",text:"Which regular expression operator matches zero or more occurrences of the preceding character?",
+ opts:["A. +","B. ?","C. *","D. ."],
+ correct:["C"],multi:false,
+ explain:"In regular expressions, * matches zero or more of the preceding element. . matches any single character. + matches one or more (ERE). ? matches zero or one (ERE)."},
+
+{id:102,topic:"103",text:"Which grep option enables case-insensitive matching?",
+ opts:["A. grep -v","B. grep -i","C. grep -n","D. grep -c"],
+ correct:["B"],multi:false,
+ explain:"grep -i performs case-insensitive matching. -v inverts the match, -n shows line numbers, -c counts matching lines."},
+
+{id:103,topic:"103",text:"Which command is used to perform inline text substitutions in a stream or file?",
+ opts:["A. awk","B. tr","C. sed","D. cut"],
+ correct:["C"],multi:false,
+ explain:"sed (stream editor) performs text transformations on input streams. The s/old/new/g command substitutes all occurrences of a pattern."},
+
+{id:104,topic:"103",text:"Which vi mode is used to type and insert text into a document?",
+ opts:["A. Command mode","B. Insert mode","C. Visual mode","D. Ex mode"],
+ correct:["B"],multi:false,
+ explain:"vi starts in command mode. Pressing i, a, o, or similar keys enters insert mode where typed text is inserted into the buffer."},
+
+{id:105,topic:"103",text:"Which vi command saves the current file and exits?",
+ opts:["A. :w","B. :q!","C. :wq","D. ZX"],
+ correct:["C"],multi:false,
+ explain:":wq (or ZZ) writes the file and quits vi. :w saves without quitting. :q! quits without saving, discarding changes."},
+
+{id:106,topic:"103",text:"Which key in vi switches from insert mode back to command mode?",
+ opts:["A. Ctrl+C","B. Escape","C. Ctrl+Z","D. Enter"],
+ correct:["B"],multi:false,
+ explain:"Pressing Escape returns vi to command mode from insert mode. This is fundamental to vi's modal editing paradigm."},
+
+{id:107,topic:"103",text:"Which command displays the full path of an executable file?",
+ opts:["A. which","B. whereis","C. locate","D. find"],
+ correct:["A"],multi:false,
+ explain:"which searches PATH directories and prints the full path of the named command. whereis finds binaries, source, and man pages."},
+
+{id:108,topic:"103",text:"Which command displays lines from a file that do NOT match a given pattern?",
+ opts:["A. grep -n","B. grep -v","C. grep -c","D. grep -l"],
+ correct:["B"],multi:false,
+ explain:"grep -v (--invert-match) prints lines that do NOT match the pattern. Useful for filtering out unwanted lines."},
+
+{id:109,topic:"103",text:"Which command displays the type of a command (built-in, alias, file, etc.)?",
+ opts:["A. which","B. type","C. whereis","D. file"],
+ correct:["B"],multi:false,
+ explain:"The type builtin identifies how a command would be interpreted by the shell — as a builtin, alias, function, or external program."},
+
+{id:110,topic:"103",text:"What does the command 'cat file1 file2 > file3' do?",
+ opts:["A. Compares file1 and file2 and writes differences to file3",
+       "B. Concatenates file1 and file2 and writes the result to file3",
+       "C. Copies file1 to file3 ignoring file2",
+       "D. Appends file1 to file2 and names the result file3"],
+ correct:["B"],multi:false,
+ explain:"cat reads files sequentially and writes them to stdout. Redirecting to file3 creates a concatenated output containing both files in order."},
+
+{id:111,topic:"103",text:"Which command displays the number of lines in a file?",
+ opts:["A. wc -c filename","B. wc -w filename","C. wc -l filename","D. lines filename"],
+ correct:["C"],multi:false,
+ explain:"wc -l counts newline characters (lines) in a file. -w counts words, -c counts bytes, -m counts characters."},
+
+{id:112,topic:"103",text:"Which environment variable defines the shell's command search path?",
+ opts:["A. SHELL","B. HOME","C. PATH","D. TERM"],
+ correct:["C"],multi:false,
+ explain:"PATH is a colon-separated list of directories the shell searches for executables when a command is run without an explicit path."},
+
+{id:113,topic:"103",text:"Which command displays a manual page for a command?",
+ opts:["A. help","B. info","C. man","D. doc"],
+ correct:["C"],multi:false,
+ explain:"man displays the manual page for a command. man 5 filename shows section 5 (file formats). man -k keyword searches manual pages."},
+
+{id:114,topic:"103",text:"Which command is used to set or display environment variables in the current shell session?",
+ opts:["A. export","B. setenv","C. env","D. Both A and C"],
+ correct:["D"],multi:false,
+ explain:"export makes a shell variable available to child processes. env displays or sets environment variables. Both are used for managing environment variables."},
+
+{id:115,topic:"103",text:"Which command shows the last 20 commands entered in the shell?",
+ opts:["A. history 20","B. last 20","C. cmd -20","D. recall 20"],
+ correct:["A"],multi:false,
+ explain:"The history command (built into bash/sh) shows previously entered commands. history N shows the last N commands."},
+
+{id:116,topic:"103",text:"What does 2>&1 mean in a shell command?",
+ opts:["A. Redirect stdin to stdout","B. Redirect stderr (fd 2) to the same destination as stdout (fd 1)",
+       "C. Redirect both to /dev/null","D. Create a pipe between two file descriptors"],
+ correct:["B"],multi:false,
+ explain:"2>&1 redirects file descriptor 2 (stderr) to file descriptor 1 (stdout). This is commonly used with > to capture both streams: command > file 2>&1"},
+
+{id:117,topic:"103",text:"Which command is used to archive files into a tarball?",
+ opts:["A. tar -xvf archive.tar files","B. tar -cvf archive.tar files","C. gzip files","D. zip -r archive files"],
+ correct:["B"],multi:false,
+ explain:"tar -c creates an archive, -v shows verbose output, -f specifies the archive filename. tar -cvf archive.tar files creates a new tarball."},
+
+{id:118,topic:"103",text:"Which command extracts files from a gzip-compressed tar archive?",
+ opts:["A. tar -cvzf archive.tar.gz","B. tar -xvzf archive.tar.gz","C. gunzip archive.tar.gz","D. tar -tvzf archive.tar.gz"],
+ correct:["B"],multi:false,
+ explain:"tar -x extracts, -v is verbose, -z handles gzip compression, -f specifies the file. -c creates, -t lists contents."},
+
+{id:119,topic:"103",text:"Which command compresses a file using gzip?",
+ opts:["A. compress file","B. zip file","C. gzip file","D. bzip file"],
+ correct:["C"],multi:false,
+ explain:"gzip compresses a file (replacing it with filename.gz). bzip2 uses different compression. zip creates a zip archive."},
+
+{id:120,topic:"103",text:"Which command displays a file's type based on its content (not extension)?",
+ opts:["A. type","B. stat","C. file","D. ls -t"],
+ correct:["C"],multi:false,
+ explain:"file examines file content and magic bytes to determine the file type (e.g., ELF executable, ASCII text, gzip compressed data)."},
+
+{id:121,topic:"103",text:"Which command joins lines from two files based on a common field?",
+ opts:["A. merge","B. paste","C. join","D. combine"],
+ correct:["C"],multi:false,
+ explain:"join merges lines from two sorted files that share a common field value, similar to a database join operation."},
+
+{id:122,topic:"103",text:"Which command merges corresponding lines from multiple files side by side?",
+ opts:["A. cat","B. join","C. paste","D. merge"],
+ correct:["C"],multi:false,
+ explain:"paste merges lines from multiple files horizontally (side by side) separated by a tab character by default."},
+
+{id:123,topic:"103",text:"Which option of the find command executes a command on each found file?",
+ opts:["A. -exec","B. -run","C. -do","D. -command"],
+ correct:["A"],multi:false,
+ explain:"find -exec allows running a command on each matched file: find . -name '*.log' -exec rm {} \\; — {} is replaced with the filename."},
+
+{id:124,topic:"103",text:"Which command displays disk usage for files and directories?",
+ opts:["A. df","B. du","C. fdisk","D. stat"],
+ correct:["B"],multi:false,
+ explain:"du (disk usage) shows space used by files/directories. du -sh * gives a summary per item. df shows filesystem-level disk usage."},
+
+{id:125,topic:"103",text:"Which command shows disk space usage for mounted filesystems?",
+ opts:["A. du","B. df","C. mount","D. lsblk"],
+ correct:["B"],multi:false,
+ explain:"df (disk free) shows total, used, and available disk space for each mounted filesystem. df -h uses human-readable sizes."},
+
+{id:126,topic:"103",text:"Which command redirects both stdout and stderr to a file in bash?",
+ opts:["A. command > file","B. command > file 2>&1","C. command &> file","D. Both B and C"],
+ correct:["D"],multi:false,
+ explain:"Both command > file 2>&1 and command &> file redirect stdout and stderr to the same file in bash. The &> form is bash-specific."},
+
+{id:127,topic:"103",text:"Which command is used to change the current shell in use?",
+ opts:["A. chsh","B. bash","C. newsh","D. shellchange"],
+ correct:["A"],multi:false,
+ explain:"chsh (change shell) modifies the user's default login shell entry in /etc/passwd. Simply running bash starts a new bash process."},
+
+{id:128,topic:"103",text:"What is the output of: echo $((5 + 3)) ?",
+ opts:["A. $((5 + 3))","B. 8","C. 5 + 3","D. Error"],
+ correct:["B"],multi:false,
+ explain:"$(( )) is bash arithmetic expansion. The expression 5 + 3 evaluates to 8, and echo prints that result."},
+
+{id:129,topic:"103",text:"Which command lists background jobs in the current shell session?",
+ opts:["A. ps","B. bg","C. jobs","D. processes"],
+ correct:["C"],multi:false,
+ explain:"jobs lists background and suspended jobs in the current shell. bg resumes a stopped job in the background. fg brings it to the foreground."},
+
+{id:130,topic:"103",text:"Which command sends a job to the background?",
+ opts:["A. ctrl+z then bg","B. nohup","C. bg %jobnumber","D. Both A and C"],
+ correct:["D"],multi:false,
+ explain:"Ctrl+Z suspends a foreground process; bg %n resumes it in the background. Appending & to a command also starts it in the background."},
+
+// ─── TOPIC 104 – DEVICES, FILESYSTEMS & FHS ────────────────────────────────
+{id:131,topic:"104",text:"Which command creates a new ext4 filesystem on a partition?",
+ opts:["A. mkfs -t ext4 /dev/sda1","B. format ext4 /dev/sda1","C. fdisk -t ext4 /dev/sda1","D. newfs ext4 /dev/sda1"],
+ correct:["A"],multi:false,
+ explain:"mkfs -t ext4 (or mkfs.ext4) creates an ext4 filesystem. format and newfs are not standard Linux commands for this purpose."},
+
+{id:132,topic:"104",text:"Which command is used to check and repair an ext2/ext3/ext4 filesystem?",
+ opts:["A. fsck","B. checkdisk","C. repair","D. diskfix"],
+ correct:["A"],multi:false,
+ explain:"fsck (filesystem check) checks and optionally repairs Linux filesystems. It calls filesystem-specific tools like e2fsck for ext4."},
+
+{id:133,topic:"104",text:"Which command mounts a filesystem?",
+ opts:["A. attach","B. mount","C. fstab","D. link"],
+ correct:["B"],multi:false,
+ explain:"mount attaches a filesystem to a directory (mount point) in the directory tree. Without arguments it shows all currently mounted filesystems."},
+
+{id:134,topic:"104",text:"Which command unmounts a filesystem?",
+ opts:["A. detach","B. unmount","C. umount","D. dismount"],
+ correct:["C"],multi:false,
+ explain:"umount (note: not 'unmount') detaches a filesystem. The filesystem must not be busy — no open files or processes in the mount point."},
+
+{id:135,topic:"104",text:"Which file defines filesystems to be mounted automatically at boot?",
+ opts:["A. /etc/mounts","B. /proc/mounts","C. /etc/fstab","D. /etc/mtab"],
+ correct:["C"],multi:false,
+ explain:"/etc/fstab (filesystem table) defines mount points, filesystem types, options, and dump/fsck pass order for automatic mounting at boot."},
+
+{id:136,topic:"104",text:"Which field in /etc/fstab specifies the order in which fsck checks filesystems at boot?",
+ opts:["A. Field 4 (options)","B. Field 5 (dump)","C. Field 6 (pass)","D. Field 3 (type)"],
+ correct:["C"],multi:false,
+ explain:"The 6th field in /etc/fstab is the fsck pass order. 0 = skip, 1 = first (root), 2 = checked after root. Other filesystems use 2."},
+
+{id:137,topic:"104",text:"Which command displays or sets file permissions in numeric (octal) form?",
+ opts:["A. chown","B. chgrp","C. chmod","D. stat"],
+ correct:["C"],multi:false,
+ explain:"chmod changes file permissions. It accepts both symbolic (u+x) and numeric/octal (chmod 755 file) notation."},
+
+{id:138,topic:"104",text:"What numeric permission value represents rwxr-xr-x?",
+ opts:["A. 644","B. 755","C. 777","D. 700"],
+ correct:["B"],multi:false,
+ explain:"rwx = 7, r-x = 5, r-x = 5 → 755. Owner can read/write/execute; group and others can read and execute."},
+
+{id:139,topic:"104",text:"What numeric permission value represents rw-r--r--?",
+ opts:["A. 644","B. 755","C. 600","D. 666"],
+ correct:["A"],multi:false,
+ explain:"rw- = 6, r-- = 4, r-- = 4 → 644. This is the typical default for regular files (owner can read/write; others read-only)."},
+
+{id:140,topic:"104",text:"Which command changes the owner of a file?",
+ opts:["A. chmod","B. chgrp","C. chown","D. usermod"],
+ correct:["C"],multi:false,
+ explain:"chown changes file owner and optionally group: chown user:group file. chgrp changes only the group."},
+
+{id:141,topic:"104",text:"Which command changes the group ownership of a file?",
+ opts:["A. chown","B. chgrp","C. chmod","D. groupmod"],
+ correct:["B"],multi:false,
+ explain:"chgrp changes the group of a file. chown user:group can do both simultaneously."},
+
+{id:142,topic:"104",text:"What is the effect of the setuid bit on an executable file?",
+ opts:["A. The file runs with the permissions of the executing user",
+       "B. The file runs with the permissions of the file owner",
+       "C. Only root can execute the file",
+       "D. The file permissions are inherited by created files"],
+ correct:["B"],multi:false,
+ explain:"setuid (SUID) on an executable causes it to run with the file owner's privileges rather than the executing user's. /usr/bin/passwd uses this to allow users to change passwords."},
+
+{id:143,topic:"104",text:"What is the octal value of the setuid, setgid, and sticky bit combined?",
+ opts:["A. 777","B. 7000","C. 7 (leading digit in 4-digit notation)","D. 4755"],
+ correct:["C"],multi:false,
+ explain:"In 4-digit octal notation: setuid=4000, setgid=2000, sticky=1000. Combined = 7000. chmod 4755 file sets setuid + 755."},
+
+{id:144,topic:"104",text:"What is the purpose of the sticky bit on a directory?",
+ opts:["A. Prevents the directory from being deleted",
+       "B. Only the file owner, directory owner, or root can delete files in the directory",
+       "C. Makes all files in the directory executable",
+       "D. Files in the directory inherit the directory's group"],
+ correct:["B"],multi:false,
+ explain:"The sticky bit on a directory (like /tmp) means users can only delete their own files even if they have write permission to the directory."},
+
+{id:145,topic:"104",text:"Which command creates a hard link?",
+ opts:["A. ln -s target linkname","B. ln target linkname","C. link -h target linkname","D. hardlink target linkname"],
+ correct:["B"],multi:false,
+ explain:"ln (without -s) creates a hard link. Both the original and link point to the same inode. ln -s creates a symbolic (soft) link."},
+
+{id:146,topic:"104",text:"Which command creates a symbolic (soft) link?",
+ opts:["A. ln target linkname","B. ln -s target linkname","C. symlink target linkname","D. link -s target linkname"],
+ correct:["B"],multi:false,
+ explain:"ln -s creates a symbolic link. A symlink is a special file that points to another path by name, not by inode."},
+
+{id:147,topic:"104",text:"What is a key difference between hard links and symbolic links?",
+ opts:["A. Hard links can span filesystems; symbolic links cannot",
+       "B. Symbolic links can span filesystems; hard links cannot",
+       "C. Hard links can point to directories; symbolic links cannot",
+       "D. Symbolic links share the same inode as the target"],
+ correct:["B"],multi:false,
+ explain:"Hard links must be on the same filesystem (same inode). Symbolic links can point to files across different filesystems and can point to directories."},
+
+{id:148,topic:"104",text:"Which command enables disk quotas on a filesystem?",
+ opts:["A. quotaon","B. edquota","C. repquota","D. quotacheck"],
+ correct:["A"],multi:false,
+ explain:"quotaon activates disk quota enforcement on a filesystem. quotacheck audits quotas, edquota edits user/group quotas, repquota reports quota usage."},
+
+{id:149,topic:"104",text:"Which command edits quota limits for a user?",
+ opts:["A. quotaon","B. setquota","C. edquota","D. userquota"],
+ correct:["C"],multi:false,
+ explain:"edquota opens an editor to set soft/hard limits for blocks and inodes for a specific user or group."},
+
+{id:150,topic:"104",text:"Which partition type is used for Linux swap space?",
+ opts:["A. ext4","B. swap","C. tmpfs","D. vfat"],
+ correct:["B"],multi:false,
+ explain:"Swap partitions use the 'swap' filesystem type in /etc/fstab. They are initialized with mkswap and enabled with swapon."},
+
+{id:151,topic:"104",text:"Which command adds a swap partition to the active swap space?",
+ opts:["A. mkswap","B. swapon","C. mount -t swap","D. swapenable"],
+ correct:["B"],multi:false,
+ explain:"swapon enables a swap device or file. mkswap sets up the swap area (formats it). swapoff disables a swap device."},
+
+{id:152,topic:"104",text:"Which command sets up a Linux swap area on a partition or file?",
+ opts:["A. swapon","B. swapinit","C. mkswap","D. formatswap"],
+ correct:["C"],multi:false,
+ explain:"mkswap writes the swap signature and initializes the swap area. swapon then activates it."},
+
+{id:153,topic:"104",text:"Which directory in the FHS contains user home directories by default?",
+ opts:["A. /usr","B. /home","C. /var","D. /root"],
+ correct:["B"],multi:false,
+ explain:"Per the FHS (Filesystem Hierarchy Standard), /home is the standard location for user home directories. /root is the home of the root user."},
+
+{id:154,topic:"104",text:"Which directory contains temporary files that may be deleted on reboot?",
+ opts:["A. /var/tmp","B. /tmp","C. Both A and B","D. /run/tmp"],
+ correct:["C"],multi:false,
+ explain:"/tmp is for temporary files that may be cleared on reboot. /var/tmp persists between reboots. Both serve as temporary storage."},
+
+{id:155,topic:"104",text:"According to the FHS, which directory contains variable data files such as logs, mail spools, and databases?",
+ opts:["A. /tmp","B. /usr","C. /var","D. /etc"],
+ correct:["C"],multi:false,
+ explain:"/var contains variable data: logs (/var/log), mail (/var/mail), spool files (/var/spool), and databases (/var/lib)."},
+
+{id:156,topic:"104",text:"Which directory contains host-specific system-wide configuration files?",
+ opts:["A. /usr/etc","B. /var/config","C. /etc","D. /opt/etc"],
+ correct:["C"],multi:false,
+ explain:"Per the FHS, /etc contains host-specific system configuration files. It should not contain binaries or data that changes regularly."},
+
+{id:157,topic:"104",text:"Which directory in the FHS contains essential command binaries needed for single-user mode?",
+ opts:["A. /usr/bin","B. /bin","C. /sbin","D. /opt/bin"],
+ correct:["B"],multi:false,
+ explain:"/bin contains essential command-line utilities (ls, cp, mv, cat, etc.) needed when /usr may not be mounted (e.g., single-user/recovery mode)."},
+
+{id:158,topic:"104",text:"Which directory contains system binaries for administration tasks, typically only run by root?",
+ opts:["A. /bin","B. /usr/bin","C. /sbin","D. /usr/local/bin"],
+ correct:["C"],multi:false,
+ explain:"/sbin contains system administration binaries (fdisk, fsck, ifconfig, etc.) intended primarily for root. /usr/sbin has non-essential system binaries."},
+
+{id:159,topic:"104",text:"Which directory in the FHS is intended for add-on application software packages?",
+ opts:["A. /usr/extra","B. /opt","C. /etc/apps","D. /var/opt"],
+ correct:["B"],multi:false,
+ explain:"/opt is for optional or add-on application software packages. Each package gets its own subdirectory under /opt (e.g., /opt/oracle)."},
+
+{id:160,topic:"104",text:"Which directory contains shared libraries for /bin and /sbin binaries?",
+ opts:["A. /usr/lib","B. /lib","C. /etc/lib","D. /var/lib"],
+ correct:["B"],multi:false,
+ explain:"/lib contains shared libraries and kernel modules needed by /bin and /sbin binaries. /usr/lib contains libraries for /usr/bin and /usr/sbin."},
+
+{id:161,topic:"104",text:"Which command displays the inode number of a file?",
+ opts:["A. ls -l","B. ls -i","C. stat","D. Both B and C"],
+ correct:["D"],multi:false,
+ explain:"ls -i shows the inode number for each file. stat provides detailed inode information including inode number, size, timestamps, and permissions."},
+
+{id:162,topic:"104",text:"Which command is used to partition a disk using a menu-driven interface?",
+ opts:["A. parted","B. fdisk","C. lsblk","D. mkpart"],
+ correct:["B"],multi:false,
+ explain:"fdisk provides an interactive menu-driven interface for MBR disk partitioning. parted supports both MBR and GPT. gdisk is for GPT disks."},
+
+{id:163,topic:"104",text:"Which command displays information about block devices in a tree format?",
+ opts:["A. blkid","B. fdisk -l","C. lsblk","D. parted -l"],
+ correct:["C"],multi:false,
+ explain:"lsblk lists block devices (disks, partitions, LVM volumes) in a hierarchical tree format showing size, type, and mount point."},
+
+{id:164,topic:"104",text:"Which command displays UUIDs and filesystem types for block devices?",
+ opts:["A. lsblk","B. blkid","C. fdisk -u","D. parted uuid"],
+ correct:["B"],multi:false,
+ explain:"blkid probes and shows block device attributes including UUID, filesystem type, and label. Useful when configuring /etc/fstab to use UUIDs."},
+
+{id:165,topic:"104",text:"Which filesystem check option of fsck automatically repairs all detected problems?",
+ opts:["A. fsck -n","B. fsck -y","C. fsck -r","D. fsck -a"],
+ correct:["B"],multi:false,
+ explain:"fsck -y automatically answers 'yes' to all repair prompts. fsck -n checks without making any changes. fsck -a also auto-repairs some problems."},
+
+{id:166,topic:"104",text:"Which command is used to tune ext2/ext3/ext4 filesystem parameters?",
+ opts:["A. mkfs.ext4","B. e2fsck","C. tune2fs","D. resize2fs"],
+ correct:["C"],multi:false,
+ explain:"tune2fs adjusts tunable filesystem parameters on ext2/ext3/ext4 filesystems, such as volume label, reserved blocks, and mount count."},
+
+{id:167,topic:"104",text:"Which directory contains device files for hardware and pseudo-devices?",
+ opts:["A. /sys","B. /proc","C. /dev","D. /mnt"],
+ correct:["C"],multi:false,
+ explain:"/dev contains device files for block devices (disks), character devices (terminals, input), and special files like /dev/null, /dev/random."},
+
+{id:168,topic:"104",text:"Which of the following is the device file for the first SATA/SCSI hard disk?",
+ opts:["A. /dev/hda","B. /dev/sda","C. /dev/disk0","D. /dev/ada0"],
+ correct:["B"],multi:false,
+ explain:"/dev/sda is the first SCSI/SATA disk. /dev/hda was the naming for older IDE disks. /dev/sda1, /dev/sda2 are its partitions."},
+
+{id:169,topic:"104",text:"What does the command 'chmod o-w file' do?",
+ opts:["A. Removes write permission for owner","B. Removes write permission for others",
+       "C. Removes write permission for group","D. Adds write permission for others"],
+ correct:["B"],multi:false,
+ explain:"o-w removes (−) write (w) permission for others (o). u=owner, g=group, o=others, a=all. + adds, - removes, = sets exactly."},
+
+{id:170,topic:"104",text:"Which command can resize an ext4 filesystem?",
+ opts:["A. tune2fs -r","B. resize2fs","C. fsck -s","D. e2resize"],
+ correct:["B"],multi:false,
+ explain:"resize2fs grows or shrinks ext2/3/4 filesystems. The partition must be resized first (using fdisk/parted), then resize2fs adjusts the filesystem."},
+
+{id:171,topic:"104",text:"Which command reports quota usage for all users on a filesystem?",
+ opts:["A. quotaon","B. edquota -l","C. repquota","D. quota -u all"],
+ correct:["C"],multi:false,
+ explain:"repquota produces a summary report of disk quota usage for all users (or groups with -g) on a filesystem."},
+
+{id:172,topic:"104",text:"Which /etc/fstab option makes a filesystem mount in read-only mode?",
+ opts:["A. noro","B. ro","C. read-only","D. ronly"],
+ correct:["B"],multi:false,
+ explain:"The 'ro' option in /etc/fstab mounts the filesystem read-only. 'rw' mounts it read-write."},
+
+{id:173,topic:"104",text:"Which command finds files that have the SUID bit set?",
+ opts:["A. find / -perm -4000","B. find / -type suid","C. ls -S /","D. grep -r SUID /"],
+ correct:["A"],multi:false,
+ explain:"find / -perm -4000 finds files with the setuid bit set. -4000 means the SUID bit must be set; other bits can be anything."},
+
+{id:174,topic:"104",text:"According to the FHS, which directory is for locally installed software not managed by the package manager?",
+ opts:["A. /opt","B. /usr/local","C. /usr/extra","D. /custom"],
+ correct:["B"],multi:false,
+ explain:"/usr/local is for locally compiled and installed software. It mirrors the /usr structure with /usr/local/bin, /usr/local/lib, etc."},
+
+{id:175,topic:"104",text:"Which command is used to create a new partition table and manage partitions with GPT support?",
+ opts:["A. fdisk","B. cfdisk","C. parted","D. sfdisk"],
+ correct:["C"],multi:false,
+ explain:"parted supports both MBR and GPT partition tables and can create, resize, and delete partitions. gdisk is also GPT-specific. fdisk now has limited GPT support."},
+
+{id:176,topic:"104",text:"Which file in /proc shows information about swap usage?",
+ opts:["A. /proc/swapinfo","B. /proc/swaps","C. /proc/meminfo","D. Both B and C"],
+ correct:["D"],multi:false,
+ explain:"/proc/swaps shows all active swap partitions/files with size and usage. /proc/meminfo also includes SwapTotal and SwapFree fields."},
+
+{id:177,topic:"104",text:"SIMULATION — What is the command used to initialize a swap partition before it can be activated? (Command name only)",
+ sim:true,
+ correct:["mkswap"],
+ explain:"mkswap sets up a Linux swap area on a device or file. After running mkswap, use swapon to activate it."},
+
+{id:178,topic:"104",text:"Which command is used to check quota consistency and create quota database files?",
+ opts:["A. quotaon","B. repquota","C. quotacheck","D. edquota"],
+ correct:["C"],multi:false,
+ explain:"quotacheck scans the filesystem for disk usage, checks quota consistency, and creates or updates the quota database files (aquota.user, aquota.group)."},
+
+{id:179,topic:"104",text:"Which of the following are valid mount options in /etc/fstab? (Choose THREE)",
+ opts:["A. ro","B. noexec","C. suid-off","D. nosuid","E. autoboot"],
+ correct:["A","B","D"],multi:true,
+ explain:"Valid fstab mount options include ro (read-only), noexec (no execution of binaries), and nosuid (ignore SUID/SGID bits). suid-off and autoboot are not valid options."}
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let current = 0;
+let answered = {}; // id -> {selected, correct}
+let correct = 0, wrong = 0;
+
+function startQuiz() {
+  document.getElementById('start-screen').classList.add('hidden');
+  document.getElementById('quiz-view').classList.remove('hidden');
+  document.getElementById('nav-bar').style.display = 'flex';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  const total = QUESTIONS.length;
+
+  // header
+  document.getElementById('q-meta').textContent = `Question ${current+1} of ${total}`;
+  document.getElementById('q-topic-badge').textContent = `Topic ${q.topic}`;
+  document.getElementById('sim-badge').classList.toggle('hidden', !q.sim);
+  document.getElementById('nav-indicator').textContent = `${current+1} / ${total}`;
+
+  // progress
+  document.getElementById('prog-bar').style.width = `${((current+1)/total)*100}%`;
+
+  // question text
+  document.getElementById('q-text').innerHTML = q.text.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+  // multi hint
+  const multiHint = document.getElementById('multi-hint');
+  if (q.multi) {
+    multiHint.classList.remove('hidden');
+    document.getElementById('multi-count').textContent = q.correct.length;
+  } else {
+    multiHint.classList.add('hidden');
+  }
+
+  // options or sim
+  const optWrap = document.getElementById('options-wrap');
+  const simWrap = document.getElementById('sim-wrap');
+  const simInput = document.getElementById('sim-input');
+
+  optWrap.innerHTML = '';
+  simInput.value = '';
+  simInput.className = 'sim-input';
+
+  if (q.sim) {
+    optWrap.classList.add('hidden');
+    simWrap.classList.remove('hidden');
+    simInput.disabled = false;
+    simInput.addEventListener('input', () => {
+      document.getElementById('btn-submit').disabled = simInput.value.trim() === '';
+    });
+    simInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && simInput.value.trim()) submitAnswer();
+    });
+  } else {
+    optWrap.classList.remove('hidden');
+    simWrap.classList.add('hidden');
+    const letters = ['A','B','C','D','E','F'];
+    q.opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      btn.dataset.letter = letters[i];
+      const label = opt.replace(/^[A-E]\.\s*/,'');
+      btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span>${label}</span>`;
+      btn.onclick = () => toggleOption(btn, q);
+      optWrap.appendChild(btn);
+    });
+  }
+
+  // feedback
+  const fb = document.getElementById('feedback-box');
+  fb.className = 'feedback-box';
+
+  // buttons
+  document.getElementById('btn-submit').disabled = true;
+  document.getElementById('btn-submit').classList.remove('hidden');
+  document.getElementById('btn-next').classList.add('hidden');
+  document.getElementById('btn-skip').classList.remove('hidden');
+
+  // restore previous answer if revisiting
+  const prev = answered[q.id];
+  if (prev) {
+    showResult(q, prev.selected, false);
+  }
+}
+
+function toggleOption(btn, q) {
+  if (btn.disabled) return;
+  if (!q.multi) {
+    document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  } else {
+    btn.classList.toggle('selected');
+  }
+  const anySelected = document.querySelectorAll('.opt-btn.selected').length > 0;
+  document.getElementById('btn-submit').disabled = !anySelected;
+}
+
+function submitAnswer() {
+  const q = QUESTIONS[current];
+  let selected = [];
+  if (q.sim) {
+    selected = [document.getElementById('sim-input').value.trim().toLowerCase()];
+  } else {
+    document.querySelectorAll('.opt-btn.selected').forEach(b => selected.push(b.dataset.letter));
+  }
+  if (selected.length === 0) return;
+
+  const isCorrect = checkCorrect(q, selected);
+  if (!answered[q.id]) {
+    if (isCorrect) correct++; else wrong++;
+    answered[q.id] = { selected, correct: isCorrect };
+    updateHeader();
+  }
+
+  showResult(q, selected, true);
+}
+
+function checkCorrect(q, selected) {
+  if (q.sim) {
+    const ans = selected[0].toLowerCase();
+    return q.correct.map(c=>c.toLowerCase()).includes(ans);
+  }
+  if (selected.length !== q.correct.length) return false;
+  return q.correct.every(c => selected.includes(c)) && selected.every(c => q.correct.includes(c));
+}
+
+function showResult(q, selected, animate) {
+  const isCorrect = checkCorrect(q, selected);
+
+  if (!q.sim) {
+    document.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.disabled = true;
+      const letter = btn.dataset.letter;
+      if (q.correct.includes(letter)) btn.classList.add(selected.includes(letter) ? 'correct' : 'show-correct');
+      else if (selected.includes(letter) && !q.correct.includes(letter)) btn.classList.add('wrong');
+      btn.classList.remove('selected');
+    });
+  } else {
+    const inp = document.getElementById('sim-input');
+    inp.disabled = true;
+    inp.classList.add(isCorrect ? 'correct' : 'wrong');
+  }
+
+  const fb = document.getElementById('feedback-box');
+  fb.className = 'feedback-box show ' + (isCorrect ? 'correct' : 'wrong');
+  document.getElementById('fb-label').textContent = isCorrect ? '✓ CORRECT' : '✗ INCORRECT';
+  let ans = isCorrect ? '' : `Correct answer: <strong>${q.correct.join(', ')}</strong><br>`;
+  document.getElementById('fb-ans').innerHTML = ans + q.explain;
+
+  document.getElementById('btn-submit').classList.add('hidden');
+  document.getElementById('btn-skip').classList.add('hidden');
+  document.getElementById('btn-next').classList.remove('hidden');
+}
+
+function skipQ() {
+  if (!answered[QUESTIONS[current].id]) {
+    answered[QUESTIONS[current].id] = { selected: [], correct: false, skipped: true };
+  }
+  nextQ();
+}
+
+function nextQ() {
+  if (current < QUESTIONS.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function prevQ() {
+  if (current > 0) { current--; renderQuestion(); }
+}
+
+function updateHeader() {
+  document.getElementById('h-correct').textContent = correct;
+  document.getElementById('h-wrong').textContent = wrong;
+  document.getElementById('h-remain').textContent = QUESTIONS.length - Object.keys(answered).length;
+}
+
+function showResults() {
+  document.getElementById('quiz-view').classList.add('hidden');
+  document.getElementById('nav-bar').style.display = 'none';
+  document.getElementById('result-screen').classList.remove('hidden');
+
+  const total = QUESTIONS.length;
+  const skipped = Object.values(answered).filter(a=>a.skipped).length;
+  const pct = Math.round((correct / total) * 100);
+
+  document.getElementById('r-pct').textContent = pct + '%';
+  document.getElementById('r-correct').textContent = correct;
+  document.getElementById('r-wrong').textContent = wrong;
+  document.getElementById('r-skip').textContent = total - Object.keys(answered).length + skipped;
+
+  let verdict = pct >= 70 ? '🎉 PASS — Well done!' : '📚 Keep Studying';
+  document.getElementById('r-verdict').textContent = verdict;
+  document.getElementById('r-sub').textContent = `You scored ${correct} out of ${total} questions (${pct}%). Passing score is typically 70%.`;
+
+  // Animate ring
+  const circumference = 2 * Math.PI * 80;
+  const offset = circumference * (1 - pct / 100);
+  const arc = document.getElementById('score-arc');
+  arc.style.strokeDasharray = circumference;
+  arc.style.strokeDashoffset = offset;
+  arc.style.transition = 'stroke-dashoffset 1.5s ease';
+  document.getElementById('r-pct').style.color = pct >= 70 ? 'var(--green)' : 'var(--red)';
+}
+
+function resetQuiz() {
+  current = 0; correct = 0; wrong = 0; answered = {};
+  updateHeader();
+  document.getElementById('result-screen').classList.add('hidden');
+  document.getElementById('quiz-view').classList.remove('hidden');
+  document.getElementById('nav-bar').style.display = 'flex';
+  renderQuestion();
+}
+</script>
+</body>
+</html>
